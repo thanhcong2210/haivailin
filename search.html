@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon">
+    <title>Blog</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/blog/">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="css/simplePagination.css" rel="stylesheet" />
+    <link href="css/blog.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand blog-header-logo" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" id="menus">
+                </ul>
+                <form class="form-inline my-2 my-lg-0" action="search.html" method="GET">
+                    <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="" aria-label="Search" />
+                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </nav>
+
+        <div>
+            <p>
+                <a href="https://mitom1.tv/img/OLE777" target="_blank" rel="nofollow noopener noreferrer">
+                    <img class="banner-header" src="https://i-imgur-com.cdn.ampproject.org/i/s/cdn.bongdadem.net/2020/11/451245120.gif" data-src="https://i-imgur-com.cdn.ampproject.org/i/s/cdn.bongdadem.net/2020/11/451245120.gif" >
+                </a>
+            </p>
+        </div>
+
+        <div class="row mb-2" id="posts">
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="js/jquery.simplePagination.js"></script>
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+    <script id="post-template" type="text/x-handlebars-template">
+        <div class="col-md-4 score-right">
+            <a href="viewer.html?view={{ id }}">
+                <div class="card flex-md-row mb-8 box-shadow h-md-250">
+                    <img style="width:100%;" class="card-img-right flex-auto d-none d-md-block" src="{{ url }}" alt="{{ title }}">
+                </div>
+                <div style="text-align: center;">{{ id }}</div>
+            </a> 
+            <div style="text-align: center;">{{ created }}</div>
+        </div>
+    </script>
+    <script id="menu-template" type="text/x-handlebars-template">
+        <li class="nav-item {{ classDropdown }}">
+            <a class="nav-link {{ classDropdownToggle }}" 
+                id="navbarDropdown" 
+                role="button" 
+                data-toggle="{{ allowDropdown }}" 
+                aria-haspopup="true" 
+                aria-expanded="false"
+                children="{{ children }}"
+                href="{{ url }}"
+                type="{{ type }}">
+                {{ name_menu }}
+            </a>
+            <ul class="dropdown-menu" 
+                aria-labelledby="navbarDropdown"
+                id="{{ idMenu }}">
+            </ul>
+        </li>
+    </script>
+    <script id="submenu-template" type="text/x-handlebars-template">
+        <a class="dropdown-item" href="{{ menu }}.html?id={{ id }}">{{ name }}</a>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("body").append(addScript());
+            
+            $(document).on("click", "#navbarDropdown", function(e){
+                var children = $(this).attr("children");
+                var href = $(this).attr("href");
+                var type = $(this).attr("type");
+                if (children === "true") {
+                    switch(type) {
+                        case "star":
+                            var list_star = JSON.parse(localStorage.getItem("jsStars"));
+                            loadSubStar(list_star);
+                        break;
+                        case "category":
+                        var list_category = JSON.parse(localStorage.getItem("jsCategories"));
+                            loadSubCategory(list_category);
+                        break;
+                    }
+                    
+                }else{
+                    location.href = href;
+                }
+            });
+
+            var id = window.location.search.replace("?keyword=", "");
+            console.log("["+new Date().toLocaleTimeString()+"] View Search Keyword "+id);
+            
+            function loadPosts(posts) {
+                $("#posts").empty();
+                if (posts.length > 0) {
+                    $.each(posts, function (index, value) {
+                        var source = $("#post-template").html();
+                        var template = Handlebars.compile(source);
+                        var context = {
+                            id: value.data.id,
+                            title: ((value.data.title).length > 20 ) ? (value.data.title).substr(0,20)+"..." : value.data.title,
+                            // url: this.data.url,
+                            url: "https://cn.i.cdn.ti-platform.com/content/437/teen-titans-go/showpage/za/ttgo.aa9f06c8.jpg",
+                            permalink: value.data.permalink,
+                            created: timeConverter(value.data.created),
+                        };
+                        var html = template(context);
+                        $("#posts").append(html);
+                    });
+                }else{
+                    var html = `
+                        <div id="notfound" style="height: 50vh !important;">
+                            <div class="notfound">
+                                <div class="notfound-404">
+                                    <h1>4<span></span>4</h1>
+                                </div>
+                                <h2>Oops! Page Not Be Found</h2>
+                                <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
+                                <a href="${base_url()}">Back to homepage</a>
+                            </div>
+                        </div>
+                    `;
+                    $("body").append(html);
+                }
+                $("body").append(`<footer class="blog-footer">
+                    <p>Design by <a href="https://ntccorp.com">NTCCORP</a>.</p>
+                    <p><a href="#">Back to top</a></p>
+                </footer>`);
+            }
+
+            $.ajax({
+                dataType: "json",
+                url: "data/jsonformatter.json",
+                success: function (response_json) {
+                    data = $(response_json.data.children);
+                    var list_data = listDataFromStar(data, id);
+                    dataCount = list_data.length;
+                    itemsOnPage = 9;
+                    loadPosts(list_data);
+                    var items = $(".score-right");
+                    items.slice(itemsOnPage).hide();
+
+                    $("#light-pagination").pagination({
+                        items: dataCount,
+                        itemsOnPage: itemsOnPage,
+                        cssStyle: "light-theme",
+
+                        // This is the actual page changing functionality.
+                        onPageClick: function (pageNumber) {
+                            // We need to show and hide `tr`s appropriately.
+                            var showFrom = itemsOnPage * (pageNumber - 1);
+                            var showTo = showFrom + itemsOnPage;
+
+                            // We'll first hide everything...
+                            items
+                                .hide()
+                                // ... and then only show the appropriate rows.
+                                .slice(showFrom, showTo)
+                                .show();
+                        },
+                    });
+                },
+            });
+
+            function timeConverter(UNIX_timestamp){
+                var a = new Date(UNIX_timestamp * 1000);
+                var months= ["January","February","March","April","May","June","July",
+                        "August","September","October","November","December"];
+                var year = a.getFullYear();
+                var month = months[a.getMonth()];
+                var date = a.getDate();
+                var hour = a.getHours();
+                var min = a.getMinutes();
+                var sec = a.getSeconds();
+                var time = month + ',' + date + ' ' + year;
+                return time;
+            }
+        });
+
+        function loadSubStar(stars) {
+            $("#dropDownMenuStar").empty();
+            $.each(stars, function( index, value ) {
+                var source = $("#submenu-template").html();
+                var template = Handlebars.compile(source);
+                var context = {
+                    id: value.id,
+                    name: value.name,
+                    menu: "star",
+                };
+                var html = template(context);
+                $("#dropDownMenuStar").append(html);
+            });
+        }
+
+        function loadSubCategory(category) {
+            $("#dropDownMenuCategory").empty();
+            $.each(category, function( index, value ) {
+                var source = $("#submenu-template").html();
+                var template = Handlebars.compile(source);
+                var context = {
+                    id: value.id,
+                    name: value.name,
+                    menu: "category",
+                };
+                var html = template(context);
+                $("#dropDownMenuCategory").append(html);
+            });
+        }
+
+        function listDataFromStar(data, id){
+            var arr = new Array();
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].data.id == id) {
+                    arr.push(data[i]);
+                }
+            }
+
+            return arr;
+        }
+
+        function addScript() {
+            var time = new Date().getMilliseconds();
+            var link = `<script src="js/base.js?v=${time}"><\/script>`;
+            return link;
+        }
+    </script>
+</body>
+
+</html>

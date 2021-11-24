@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon">
+    <title>Blog</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/blog/">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="css/simplePagination.css" rel="stylesheet" />
+    <link href="css/blog.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand blog-header-logo" href="#"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" id="menus">
+                </ul>
+                <form class="form-inline my-2 my-lg-0" action="search.html" method="GET">
+                    <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="" aria-label="Search" />
+                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </nav>
+
+        <div>
+            <p>
+                <a href="https://mitom1.tv/img/OLE777" target="_blank" rel="nofollow noopener noreferrer">
+                    <img class="banner-header" src="https://i-imgur-com.cdn.ampproject.org/i/s/cdn.bongdadem.net/2020/11/451245120.gif" data-src="https://i-imgur-com.cdn.ampproject.org/i/s/cdn.bongdadem.net/2020/11/451245120.gif" >
+                </a>
+            </p>
+        </div>
+
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-md-8 blog-main">
+                    <h3 class="pb-3 mb-4 font-italic border-bottom">
+                    </h3>
+
+                    <div class="blog-post" id="blog-post">
+                    </div>
+                    <!-- /.blog-post -->
+                </div>
+                <!-- /.blog-main -->
+
+                <aside class="col-md-4 blog-sidebar">
+                    <div class="p-3">
+                        <h4 class="font-italic">Xem thêm</h4>
+                        <ol class="list-unstyled mb-0" id="more-posts">
+                        </ol>
+                    </div>
+                </aside>
+                <!-- /.blog-sidebar -->
+            </div>
+            <!-- /.row -->
+        </main>
+        <div class="row mb-2" id="posts-category">
+        </div>
+    </div>
+    <div class="modal-ads">
+        <a href="javascript:void(0)" title="Close" id="close-ads"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        <div class="bg-ads"></div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+    <script src="https://jedfoster.com/js/readmore.min.js"></script>
+    <!-- <script type="text/javascript" src="js/readmore.min.js"></script> -->
+    <!-- <iframe style="width: 100%; height: 100%; min-height: 360px;" src="{{ media }}" frameborder="0" scrolling="0" allowfullscreen></iframe> -->
+    <!-- class="card-img-right flex-auto d-md-block" style="height:100%; width:100%; min-height: 300px;" -->
+
+    <script id="post-template" type="text/x-handlebars-template">
+        <h2 class="blog-post-title">{{ name }}</h2>
+        <p class="blog-post-meta"><i class="fa fa-calendar" aria-hidden="true"></i> {{ created }} <i class="fa fa-user-circle-o" aria-hidden="true"></i> <a href="#">{{ author }}</a></p>
+        <div class="video-wrapper">
+            <iframe id="videoPlayer" src="{{ link1 }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <button type="button" id="link1" class="btn btn-primary btn-sm mr-10" link="{{ link1 }}">HD1</button>
+        <button type="button" id="link2" class="btn btn-light btn btn-outline-primary btn-sm mr-10" style="{{ hide_link2 }}" link="{{ link2 }}">HD2</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm mr-10 btn-float-right"><i class="fa fa-eye" aria-hidden="true"></i> {{ likes }}</button>
+        <button type="button" class="btn btn-outline-warning btn-sm mr-10 btn-float-right"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{ dislikes }}</button>
+        <button type="button" class="btn btn-outline-success btn-sm mr-10 btn-float-right"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ view_count }}</button>
+        <div class="mr-10">
+            <div id="selftext_html_main">{{ selftext_html }}</div>
+            <hr class="hr-text" data-content="Xem thêm" flag="0">
+        </div>
+    </script>
+    <script id="menu-template" type="text/x-handlebars-template">
+        <li class="nav-item {{ classDropdown }}">
+            <a class="nav-link {{ classDropdownToggle }}" 
+                id="navbarDropdown" 
+                role="button" 
+                data-toggle="{{ allowDropdown }}" 
+                aria-haspopup="true" 
+                aria-expanded="false"
+                children="{{ children }}"
+                href="{{ url }}"
+                type="{{ type }}">
+                {{ name_menu }}
+            </a>
+            <ul class="dropdown-menu" 
+                aria-labelledby="navbarDropdown"
+                id="{{ idMenu }}">
+            </ul>
+        </li>
+    </script>
+    <script id="submenu-template" type="text/x-handlebars-template">
+        <a class="dropdown-item" href="{{ menu }}.html?id={{ id }}">{{ name }}</a>
+    </script>
+    <script id="more-posts-template" type="text/x-handlebars-template">
+        <li>
+            <div class="score-right">
+                <a href="viewer.html?view={{ id }}">
+                    <div class="card flex-md-row mb-8 box-shadow h-md-175">
+                        <img style="width:100%;" class="card-img-right flex-auto d-md-block" src="{{ url }}" alt="{{ title }}">
+                    </div>
+                    <div style="text-align: center;">{{ id }}</div>
+                </a> 
+                <div style="text-align: center;">{{ created }}</div>
+            </div>
+        </li>
+    </script>
+
+    <script id="post-category-template" type="text/x-handlebars-template">
+        <div class="col-md-4 score-right">
+            <a href="viewer.html?view={{ id }}">
+                <div class="card flex-md-row mb-8 box-shadow h-md-250">
+                    <img style="width:100%;" class="card-img-right flex-auto d-none d-md-block" src="{{ url }}" alt="{{ title }}">
+                </div>
+                <div style="text-align: center;">{{ id }}</div>
+            </a> 
+            <div style="text-align: center;">{{ created }}</div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("body").append(addScript());
+            $("body").append(`<footer class="blog-footer">
+                <p>Liên hệ quảng cáo: <a href="mailto:admin@ntccorp.com">admin@ntccorp.com</a></p>
+                <p>Design by <a href="https://ntccorp.com">NTCCORP</a>.</p>
+            </footer>`);
+            var id = window.location.search.replace("?view=", "");
+            var check_exit_id = false;
+            console.log("["+new Date().toLocaleTimeString()+"] View ID "+id);
+            resizePost();
+            $(window).resize(function() {
+                resizePost();
+            });
+
+            $(document).on("click", ".hr-text", function(e){
+                var flag = $(this).attr("flag");
+                if (flag == 0) {
+                    var readMore = localStorage.getItem("readMore");
+                    var strDefault = $("#selftext_html_main").text();
+                    localStorage.setItem("strDefault", strDefault);
+                    $("#selftext_html_main").append(readMore);
+                    $(this).attr("flag", "1");
+                    $(this).attr("data-content", "Rút gọn");
+                }else{
+                    var strDefault = localStorage.getItem("strDefault");
+                    $("#selftext_html_main").html(strDefault);
+                    $(this).attr("flag", "0");
+                    $(this).attr("data-content", "Xem thêm");
+                    $('html, body').animate({scrollTop:0}, '300');
+                }
+            });
+
+            loadViewerArticle(id);
+
+            function loadViewerArticle(id){
+                var list_articles = JSON.parse(localStorage.getItem("jsArticles"));
+                if (list_articles !== null) {
+                    loadPosts(list_articles, id);
+                    loadMorePost(list_articles, id);
+                    loadPostsCategory(list_articles, id);
+                }else{
+                    var html = `
+                        <div id="notfound" style="height: 50vh !important;">
+                            <div class="notfound">
+                                <div class="notfound-404">
+                                    <h1>4<span></span>4</h1>
+                                </div>
+                                <h2>Oops! Page Not Be Found</h2>
+                                <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
+                                <a href="${base_url()}">Back to homepage</a>
+                            </div>
+                        </div>
+                    `;
+                    $("body").append(html);
+                }
+            }
+
+            function loadPosts(articles, id) {
+                pos = articles.map(function(e) { return e.id; }).indexOf(id);
+                if (pos !== -1) {
+                    article = articles[pos];
+                    var source = $("#post-template").html();
+                    var template = Handlebars.compile(source);
+                    var selftext_html = article.selftext_html.slice(0, 530);
+                    localStorage.setItem("readMore", article.selftext_html.slice(530,article.selftext_html.length));
+                    var context = {
+                        id: article.id,
+                        author: article.author,
+                        url: article.url,
+                        name: article.name,
+                        link1: article.link1,
+                        link2: article.link2,
+                        image: article.image,
+                        category_id: article.category_id,
+                        star_id: article.star_id,
+                        likes: article.likes,
+                        dislikes: article.dislikes,
+                        view_count: article.view_count,
+                        locked: article.locked,
+                        author: article.author,
+                        selftext_html: selftext_html,
+                        images: article.images,
+                        created: timeConverterDDMMYYYY(article.created),
+                        hide_link2: (article.link2 == "null") ? 'display:none' : "",
+                    };
+                    var html = template(context);
+                    $("#blog-post").append(html);
+                    check_exit_id = false;
+                    return false;
+                }else{
+                     check_exit_id = true;
+                }
+                if (check_exit_id == true) {
+                    var html = `
+                        <div id="notfound">
+                            <div class="notfound">
+                                <div class="notfound-404">
+                                    <h1>4<span></span>4</h1>
+                                </div>
+                                <h2>Oops! Page Not Be Found</h2>
+                                <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
+                                <a href="${base_url()}">Back to homepage</a>
+                            </div>
+                        </div>
+                    `;
+                    $("#blog-post").append(html);
+                }
+                
+            }
+
+            function loadMorePost(posts, id) {
+                posts = (shuffle(posts, id)).slice(0,4);
+                $.each(posts, function(index, value) {
+                    var source = $("#more-posts-template").html();
+                    var template = Handlebars.compile(source);
+                    var context = {
+                        id: value.id,
+                        title: ((value.name).length > 20 ) ? (value.name).substr(0,20)+"..." : value.name,
+                        // url: this.data.url,
+                        url: "https://cn.i.cdn.ti-platform.com/content/437/teen-titans-go/showpage/za/ttgo.aa9f06c8.jpg",
+                        created: timeConverter(value.created),
+                    };
+                    var html = template(context);
+                    $("#more-posts").append(html);
+                });
+            }
+
+            function loadPostsCategory(posts, id) {
+                posts = (shuffle(posts, id)).slice(0,6);
+                $.each(posts, function(index, value) {
+                    var source = $("#post-category-template").html();
+                    var template = Handlebars.compile(source);
+                    var context = {
+                        id: value.id,
+                        title: ((value.name).length > 20 ) ? (value.name).substr(0,20)+"..." : value.name,
+                        // url: this.data.url,
+                        url: "https://cn.i.cdn.ti-platform.com/content/437/teen-titans-go/showpage/za/ttgo.aa9f06c8.jpg",
+                        created: timeConverter(value.created),
+                    };
+                    var html = template(context);
+                    $("#posts-category").append(html);
+                });
+            }
+        });
+
+        function addScript() {
+            var time = new Date().getMilliseconds();
+            var link = `<script src="js/base.js?v=${time}"><\/script>`;
+            return link;
+        }
+    </script>
+</body>
+
+</html>
