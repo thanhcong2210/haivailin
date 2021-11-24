@@ -1,0 +1,27 @@
+{
+	"kind": "Listing",
+	"data": {
+		"list_catrgory": [
+			{
+				"id": "hanh-dong",
+				"name": "Hành Động",
+				"createDate": "2021-07-21 22:27:57"
+			},
+			{
+				"id": "vo-thuat",
+				"name": "Võ Thuật",
+				"createDate": "2021-07-29 20:35:23"
+			},
+			{
+				"id": "thuyet-minh",
+				"name": "Thuyết Minh",
+				"createDate": "2021-07-29 08:27:07"
+			},
+			{
+				"id": "viet-sub",
+				"name": "Việt Sub",
+				"createDate": "2021-08-10 08:48:08"
+			}
+		]
+	}
+}

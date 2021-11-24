@@ -1,0 +1,31 @@
+{
+	"kind": "Listing",
+	"data": {
+		"list_star": [
+			{
+				"id": 1,
+				"name": "Nene Tanaka",
+				"nationality": "",
+				"createDate": "2021-07-21 22:27:57"
+			},
+			{
+				"id": 2,
+				"name": "Fumika Nakayama",
+				"nationality": "Nhật Bản",
+				"createDate": "2021-07-29 20:35:23"
+			},
+			{
+				"id": 3,
+				"name": "Hana Haruna",
+				"nationality": "NULL",
+				"createDate": "2021-07-29 08:27:07"
+			},
+			{
+				"id": 4,
+				"name": "Chitose Yura",
+				"nationality": "NULL",
+				"createDate": "2021-08-10 08:48:08"
+			}
+		]
+	}
+}
